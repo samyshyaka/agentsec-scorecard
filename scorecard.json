@@ -1,0 +1,13 @@
+{
+  "overall_score": 100.0,
+  "score_by_category": {
+    "prompt_injection": 100.0,
+    "unauthorized_tool_invocation": 100.0
+  },
+  "owasp_coverage": {
+    "ASI06": 6,
+    "ASI01": 2,
+    "ASI02": 2
+  },
+  "total_scenarios_run": 10
+}
