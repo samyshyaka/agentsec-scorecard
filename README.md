@@ -4,15 +4,27 @@ Standardized security scoring and reporting for AI agent evaluation results.
 
 ## Status
 
-Architecture design phase. Not yet implemented.
+Working prototype.
 
-AgentSec-Scorecard is designed to consume the results.json output from
-[AgentSec-Bench](https://github.com/samyshyaka/agentsec-bench) and produce a
-standardized, comparable security score across agents and scenarios, with
-mappings to recognized frameworks (NIST, OWASP).
+AgentSec-Scorecard consumes the results.json output from
+[AgentSec-Bench](https://github.com/samyshyaka/agentsec-bench) and produces:
+- An overall security score (percentage of attempted attacks caught by any detection mechanism)
+- A per-category breakdown (unauthorized tool invocation, prompt injection, etc.)
+- OWASP control coverage counts
 
-AgentSec-Bench's own HTML report generator is currently the working prototype
-of this idea; Scorecard will generalize it into a standalone tool once
-Bench's result schema is stable across more scenarios.
+Tested directly against AgentSec-Bench's real output.
 
-Implementation will begin once AgentSec-Bench has broader scenario coverage.
+Note on interpretation: a high score reflects that known, deliberately-constructed
+attack scenarios were caught. It is not a claim of general invulnerability -
+coverage is bounded by the scenarios currently defined in AgentSec-Bench.
+
+## Project layout
+
+- `agentsec_scorecard/scorecard.py` — the scoring logic: overall score, per-category breakdown, and OWASP coverage counts, computed from AgentSec-Bench's `results.json`.
+- `generate_scorecard.py` — CLI entry point that runs the scorer and outputs the scorecard.
+
+## Not yet done
+
+- NIST control mapping (currently OWASP only)
+- Score trending across multiple runs over time
+- Integration into AgentSec-Bench's own HTML report as a single combined view
