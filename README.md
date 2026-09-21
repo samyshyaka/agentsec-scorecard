@@ -12,6 +12,9 @@ AgentSec-Scorecard consumes the results.json output from
 - A per-category breakdown (unauthorized tool invocation, prompt injection, etc.)
 - OWASP control coverage counts
 
+- NIST AI RMF function coverage counts (Govern/Map/Measure/Manage), using the same
+  threat-category mapping as agentsec-crosswalk
+
 Tested directly against AgentSec-Bench's real output.
 
 Note on interpretation: a high score reflects that known, deliberately-constructed
@@ -25,6 +28,5 @@ coverage is bounded by the scenarios currently defined in AgentSec-Bench.
 
 ## Not yet done
 
-- NIST control mapping (currently OWASP only)
 - Score trending across multiple runs over time
 - Integration into AgentSec-Bench's own HTML report as a single combined view
