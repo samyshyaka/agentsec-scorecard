@@ -9,6 +9,12 @@ authors = [
 requires-python = ">=3.12"
 dependencies = []
 
+
+
+[dependency-groups]
+dev = ["pytest>=8.0.0"]
+
+
 [project.scripts]
 agentsec-scorecard = "agentsec_scorecard:main"
 
