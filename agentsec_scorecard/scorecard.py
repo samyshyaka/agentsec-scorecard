@@ -1,3 +1,20 @@
+# First-pass mapping from AgentSec-Bench threat categories to NIST AI RMF
+# functions. Mirrors agentsec-crosswalk's NIST_AI_RMF_MAPPING, but keyed by
+# the plain category strings already present in results.json (rather than
+# importing agentsec-crosswalk as a dependency). Not an exhaustive/
+# authoritative compliance mapping.
+NIST_AI_RMF_MAPPING = {
+    "unauthorized_tool_invocation": ["Govern", "Manage"],
+    "prompt_injection": ["Map", "Measure"],
+    "data_exfiltration": ["Measure", "Manage"],
+    "privilege_escalation": ["Govern", "Manage"],
+    "unexpected_code_execution": ["Govern", "Manage"],
+    "rogue_agent": ["Govern", "Manage"],
+    "memory_context_poisoning": ["Map", "Measure"],
+    "human_agent_trust_exploitation": ["Govern", "Measure"],
+}
+
+
 class Scorecard:
     """Converts AgentSec-Bench results.json into a standardized security
     score and summary, independent of the HTML report generator."""
@@ -40,10 +57,21 @@ class Scorecard:
             coverage[control] = coverage.get(control, 0) + 1
         return coverage
 
+    def nist_coverage(self) -> dict[str, int]:
+        """Count of scenarios touching each NIST AI RMF function, derived
+        from each scenario's threat category via NIST_AI_RMF_MAPPING."""
+        coverage: dict[str, int] = {}
+        for r in self.results:
+            functions = NIST_AI_RMF_MAPPING.get(r.get("category"), [])
+            for fn in functions:
+                coverage[fn] = coverage.get(fn, 0) + 1
+        return coverage
+
     def summary(self) -> dict:
         return {
             "overall_score": self.overall_score(),
             "score_by_category": self.score_by_category(),
             "owasp_coverage": self.owasp_coverage(),
+            "nist_ai_rmf_coverage": self.nist_coverage(),
             "total_scenarios_run": len(self.results),
         }
