@@ -4,6 +4,7 @@ from agentsec_scorecard.scorecard import Scorecard
 from agentsec_scorecard.trend import ScoreHistory
 
 RESULTS_PATH = sys.argv[1] if len(sys.argv) > 1 else "results.json"
+PROTECTED = True if "--protected" in sys.argv else False if "--unprotected" in sys.argv else None
 
 with open(RESULTS_PATH) as f:
     data = json.load(f)
@@ -29,7 +30,9 @@ with open("scorecard.json", "w") as f:
 print("\nWritten to scorecard.json")
 
 history = ScoreHistory()
-history.record(summary)
+history.record(summary, protected=PROTECTED)
+if PROTECTED is not None:
+    print(f"\nRun labeled as: {'protected (AgentGuard-enabled)' if PROTECTED else 'unprotected (no AgentGuard)'}")
 trend = history.trend()
 print()
 if trend is None:

@@ -22,7 +22,7 @@ class ScoreHistory:
         with open(self.path) as f:
             return json.load(f)
 
-    def record(self, summary: dict) -> dict:
+    def record(self, summary: dict, protected: bool | None = None) -> dict:
         """Appends the given summary (with a timestamp) to history and
         returns the newly written entry."""
         history = self.load()
@@ -31,6 +31,7 @@ class ScoreHistory:
             "overall_score": summary["overall_score"],
             "score_by_category": summary["score_by_category"],
             "total_scenarios_run": summary["total_scenarios_run"],
+            "protected": protected,
         }
         history.append(entry)
         with open(self.path, "w") as f:
