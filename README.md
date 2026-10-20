@@ -1,3 +1,5 @@
+> **This repository has moved.** This project now lives in the [Open Agent Security Initiative repository](https://github.com/samyshyaka/agentsec), in the [`agentsec-scorecard/`](https://github.com/samyshyaka/agentsec/tree/main/agentsec-scorecard) folder. This repository is kept for its history, issues and pull requests.
+
 # AgentSec-Scorecard
 
 Standardized security scoring and reporting for AI agent evaluation results.
